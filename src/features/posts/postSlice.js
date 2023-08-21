@@ -21,10 +21,11 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     getPosts: build.query({
       query: () => '/posts',
-      transformResponse: responseData => {   // This works exactly like interceptors in axios
-        let min = 1;
+      transformResponse: (responseData) => {   // This works exactly like interceptors in axios
+        let minutesToSubtract = 1;
         const loadedPosts = responseData.map(post => {
-          if(!post?.date) { post.date = sub(new Date(), { minutes: min })}
+          // Use the sub function to subtract a certain number of minutes from the current date and then convert it to ISO
+          if(!post?.date) { post.date = sub(new Date(), { minutes: minutesToSubtract })}
         })
       }
     })
