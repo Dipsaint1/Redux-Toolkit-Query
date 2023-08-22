@@ -15,7 +15,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: (result, error, arg) => [
         { type: 'User', id: "LIST" },
-        ...result.ids.map(id => ({ type: 'User', id }))
+        // ...result.ids.map(id => ({ type: 'User', id }))
       ],
     }),
   }),
@@ -39,3 +39,9 @@ export const {
   selectIds: selectUserIds
   // Pass in a selector that returns the posts slice of state
 } = usersAdapter.getSelectors(state => selectUsersData(state) ?? initialState)
+
+// export const {
+//   selectAll: selectAllUsers,
+//   selectById: selectUserById,
+//   selectIds: selectUserIds
+// } = usersAdapter.getSelectors(state => state.usersApiSlice ?? initialState);

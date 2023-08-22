@@ -8,7 +8,7 @@ import { apiSlice } from "../api/apiSlice";
 // createEntityAdapter accepts a single option object parameter, with two optional fields inside.
 const postsAdapter = createEntityAdapter({
   // Sort all posts by date from the newest to the oldest
-  sortComparer: (a, b) => b.date.localCompare(a.date), // Check documentation
+  sortComparer: (a, b) => b.date.localeCompare(a.date), // Check documentation
 });
 
 const initialState = postsAdapter.getInitialState();
@@ -49,18 +49,18 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     getPostsByUserId: build.query({
       query: (id) => `/posts/?userId=${id}`,
       transformResponse: responseData => {
-          let min = 1;
-          const loadedPosts = responseData.map(post => {
-            if (!post?.date) post.date = sub(new Date(), { minutes: min++ }).toISOString();
-            if (!post?.reactions) post.reactions = {
-                thumbsUp: 0,
-                wow: 0,
-                heart: 0,
-                rocket: 0,
-                coffee: 0
-            }
-            return post;
-          });
+        let min = 1;
+        const loadedPosts = responseData.map(post => {
+          if (!post?.date) post.date = sub(new Date(), { minutes: min++ }).toISOString();
+          if (!post?.reactions) post.reactions = {
+            thumbsUp: 0,
+            wow: 0,
+            heart: 0,
+            rocket: 0,
+            coffee: 0
+          }
+          return post;
+        });
         return postsAdapter.setAll(initialState, loadedPosts)
       },
       providesTags: (result, error, arg) => [
@@ -157,17 +157,16 @@ const selectPostsData = createSelector(
 );
 
 // getSelectors creates selectors and we rename them with aliases using destructuring
-export const {
-  selectAll: selectAllPosts,
-  selectById: selectPostById,
-  selectIds: selectPostIds
-  // Pass in a selector that returns the posts slice of state
-} = postsAdapter.getSelectors((state) => selectPostsData(state) ?? initialState);
-
-// const postsSelectors = postsAdapter.getSelectors((state) => selectPostsData(state) ?? initialState);
 // export const {
 //   selectAll: selectAllPosts,
 //   selectById: selectPostById,
 //   selectIds: selectPostIds
-// } = postsSelectors;
+//   // Pass in a selector that returns the posts slice of state
+// } = postsAdapter.getSelectors((state) => selectPostsData(state) ?? initialState);
 
+const postsSelectors = postsAdapter.getSelectors((state) => selectPostsData(state) ?? initialState);
+export const {
+  selectAll: selectAllPosts,
+  selectById: selectPostById,
+  selectIds: selectPostIds
+} = postsSelectors;

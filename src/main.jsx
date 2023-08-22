@@ -5,8 +5,8 @@ import './index.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import store from './app/store.js';
-import { extendedApiSlice } from './features/posts/postSlice.js';
-import { usersApiSlice } from './features/users/usersSlice.js';
+import { usersApiSlice } from './features/users/usersSlice';
+import { extendedApiSlice } from './features/posts/postSlice';
 
 
 store.dispatch(extendedApiSlice.endpoints.getPosts.initiate());
