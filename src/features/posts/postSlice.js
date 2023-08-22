@@ -5,7 +5,7 @@ import { apiSlice } from "../api/apiSlice";
 
 // createEntityAdapter is a function that generates a set of prebuilt reducers and selectors for performing CRUD operations 
 // on a normalized state structure containing instances of a particular type of data object
-// createEntityAdapter accepts a single options object parameter, with two optional fields inside.
+// createEntityAdapter accepts a single option object parameter, with two optional fields inside.
 const postsAdapter = createEntityAdapter({
   // Sort all posts by date from the newest to the oldest
   sortComparer: (a, b) => b.date.localCompare(a.date), // Check documentation
@@ -94,6 +94,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body: {...initialPost, date: new Date().toISOString() }
       }),
+      // arg is the initialPost argument passed
       invalidatesTags: (result, error, arg) => [
         { type: 'Post', id: arg.id }
       ]
@@ -104,6 +105,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         method: 'DELETE',
         body: { id }
       }),
+      // arg is the initialPost argument passed
       invalidatesTags: (result, error, arg) => [
         { type: 'Post', id: arg.id }
       ]
@@ -132,7 +134,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           patchResult.undo()
         }
       }
-    })
+    }),
   }),
 });
 

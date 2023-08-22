@@ -6,10 +6,11 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import store from './app/store.js';
 import { extendedApiSlice } from './features/posts/postSlice.js';
+import { usersApiSlice } from './features/users/usersSlice.js';
 
 
 store.dispatch(extendedApiSlice.endpoints.getPosts.initiate());
-
+store.dispatch(usersApiSlice.endpoints.getUsers.initiate());
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

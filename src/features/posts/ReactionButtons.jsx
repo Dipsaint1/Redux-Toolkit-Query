@@ -1,4 +1,6 @@
-import { useAddReactionMutation } from './postsSlice'
+/* eslint-disable react/prop-types */
+
+import { useAddReactionMutation } from "./postSlice"
 
 const reactionEmoji = {
     thumbsUp: '👍',
