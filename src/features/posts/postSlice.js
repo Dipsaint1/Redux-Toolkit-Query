@@ -110,7 +110,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         { type: 'Post', id: arg.id }
       ]
     }),
-    addReaction: build.mutation({
+    addReaction: build.mutation({ // This is an optimistic update
       query: ({ postId, reactions }) => ({
         url: `posts/${postId}`,
         method: 'PATCH',
